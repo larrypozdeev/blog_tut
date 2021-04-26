@@ -10,9 +10,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
-ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com', '.amazonaws.com']
+ALLOWED_HOSTS = ['127.0.0.1','myadorableblog.herokuapp.com', 'django-tut-blog-files.s3.eu-north-1.amazonaws.com']
 
-
+ADMINS = [("Larry", "dimaspiter2012@gmail.com")]
 # Application definition
 
 INSTALLED_APPS = [

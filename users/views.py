@@ -19,6 +19,13 @@ def register(request):
 
 @login_required
 def profile(request):
+    if request.is_ajax():
+        form = ProfileUpdateForm(request.POST,request.FILES,
+        instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+        else:
+            print (form.errors)
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,

@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from .forms import SearchPostsForm
+from django.db.models import Q
+
 from django.views.generic import (
     ListView,
     DetailView,
@@ -12,6 +15,20 @@ from .models import Post
 
 
 def home(request):
+    print(True)
+    if request.method == "GET":
+        form = SearchPostsForm(request.GET)
+        print("got the request")
+        if(form.is_valid()):
+            input = request.GET['input']
+            result = []
+            print(input)
+
+        return HttpResponse(json.dumps({'posts': result}))
+
+    # return render(request, 'blog/home.html',
+    #         {'form': SearchPostsForm(), 'posts': result}, RequestContext(request))
+
     context = {
         'posts': Post.objects.all()
     }
@@ -20,10 +37,24 @@ def home(request):
 
 class PostListView(ListView):
     model = Post
+    form_class = SearchPostsForm
     template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
+
+    def get(self, request, *args, **kwargs):
+        searched = request.GET.get('search')
+        if searched:
+            posts = self.model.objects.filter(
+                        Q(title__contains=searched)|
+                        Q(author__username__contains=searched)|
+                        Q(content__contains=searched)
+                        )
+        else:
+            posts = self.model.objects.all()
+        
+        return render(request, self.template_name, {'posts': posts, 'searched': searched})
 
 
 class UserPostListView(ListView):

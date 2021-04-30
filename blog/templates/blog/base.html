@@ -10,7 +10,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+  rel="stylesheet"  type='text/css'>
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 
     {% if title %}
@@ -31,6 +33,20 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
+
+              <form class="" action="{% url 'blog-home' %}" method="GET">
+                <div class="input-group rounded">
+                    <input type="search" id="search" name="search"
+                      value="{{searched|default:''}}"
+                      class="form-control rounded"
+                      placeholder="Search" aria-label="Search"
+                      aria-describedby="search-addon"
+                    />
+                    <button type="submit" id="search-addon" class="input-group-text bg-light ml-1 border-0">
+                      <i class="fa fa-search"></i>
+                    </button>
+                </div>
+              </form>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
@@ -74,7 +90,6 @@
         </div>
       </div>
     </main>
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
